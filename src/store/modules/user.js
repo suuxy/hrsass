@@ -1,4 +1,5 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import { login } from '@/api/user'
 const state = {
   token: getToken()
 }
@@ -13,7 +14,13 @@ const mutations = {
     removeToken() // 同步到缓存
   }
 }
-const actions = {}
+const actions = {
+  async login(context, data) {
+    const res = await login(data)
+    // 封装了响应拦截器 响应回来的是我们要的那个data
+    context.commit('setToken', res)
+  }
+}
 export default {
   namespaced: true,
   state,
