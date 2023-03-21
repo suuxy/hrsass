@@ -69,7 +69,7 @@
 
 <script>
 import { validMobile } from '@/utils/validate'
-
+import { mapActions } from 'vuex'
 export default {
   name: 'Login',
   data() {
@@ -117,6 +117,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['user/login']),
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -128,21 +129,20 @@ export default {
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
+      this.$refs.loginForm.validate(async isOK => {
+        if (isOK) {
           this.loading = true
-          this.$store
-            .dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/' })
-              this.loading = false
-            })
-            .catch(() => {
-              this.loading = false
-            })
-        } else {
-          console.log('error submit!!')
-          return false
+          // 表单校验通过 调登录接口
+          try {
+            await this['user/login'](this.loginForm)
+            // 请求成功之后 跳转主页
+            this.$router.push('/')
+          } catch (error) {
+            console.log(error)
+          } finally {
+            // 无论请求成功还是失败 将加载状态关闭
+            this.loading = false
+          }
         }
       })
     }
