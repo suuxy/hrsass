@@ -5,13 +5,17 @@ import 'nprogress/nprogress.css'
 
 const whiteList = ['/login', '/404']
 // 路由前置守卫
-router.beforeEach((to, from, next) => {
+router.beforeEach(async(to, from, next) => {
   nProgress.start() // 开启进度条
   if (store.getters.token) {
     // 有token
     if (to.path === '/login') {
       next('/') // 跳转到主页
     } else {
+      if (!store.getters.userId) {
+        // 没有用户资料 获取用户资料 调用actions
+        await store.dispatch('user/getUserInfo')
+      }
       next()// 直接放行
     }
   } else {
