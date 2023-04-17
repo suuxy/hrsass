@@ -7,11 +7,11 @@ import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 
 import '@/styles/index.scss' // global css
-
+import * as filters from '@/filters'
 import App from './App'
 import store from './store'
 import router from './router'
-
+import Component from './components'
 import '@/icons' // icon
 import '@/permission' // permission control
 import * as directives from '@/directives'
@@ -33,9 +33,13 @@ Vue.use(ElementUI, { locale })
 Object.keys(directives).forEach(key => {
   Vue.directive(key, directives[key])
 })
+// Object.keys(filters)将filters对象中所有的key组成一个数组 即一个数组中包含filters对象中所有的key
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
 
 Vue.config.productionTip = false
-
+Vue.use(Component)
 new Vue({
   el: '#app',
   router,
