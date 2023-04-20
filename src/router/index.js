@@ -38,6 +38,8 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
+
+// 静态路由
 export const constantRoutes = [
   {
     path: '/login',
@@ -59,7 +61,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '首页', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'dashboard' } // title左侧菜单名
     }]
   },
   {
@@ -72,10 +74,12 @@ export const constantRoutes = [
         component: () => import('@/views/import/index')
       }
     ]
-  },
+  }
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
+
+// 动态路由
 export const asyncRoutes = [
   approvalsRouter,
   departmentsRouter,
@@ -90,11 +94,12 @@ export const asyncRoutes = [
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: [...constantRoutes, ...asyncRoutes]
+  routes: [...constantRoutes]
 })
 
 const router = createRouter()
 
+// 重置路由 这里为静态路由
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter()

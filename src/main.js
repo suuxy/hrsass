@@ -15,6 +15,7 @@ import Component from './components'
 import '@/icons' // icon
 import '@/permission' // permission control
 import * as directives from '@/directives'
+import checkPermission from '@/mixin/checkPermission'
 
 /**
  * If you don't want to use mock-server
@@ -37,6 +38,8 @@ Object.keys(directives).forEach(key => {
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
+// 全局混入对象 => 检查权限的方法
+Vue.mixin(checkPermission) // 表示所有的组件都拥有了检查操作权限的方法
 
 Vue.config.productionTip = false
 Vue.use(Component)

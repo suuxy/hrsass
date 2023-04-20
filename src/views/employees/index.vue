@@ -17,6 +17,7 @@
         >导出</el-button>
         <el-button
           slot="after"
+          :disabled="!checkPermission('POINT-USER-ADD')"
           size="small"
           type="primary"
           @click="showDialog = true"
@@ -52,12 +53,13 @@
           </el-table-column>
           <el-table-column label="操作" sortable="" fixed="right" width="280">
             <template v-slot="{ row }">
-              <el-button type="text" size="small" @click="$router.push(`/employees/detail/${row.id}`)">查看</el-button>
+              <el-button :disabled="!checkPermission('POINT-USER-UPDATE')" type="text" size="small" @click="$router.push(`/employees/detail/${row.id}`)">查看</el-button>
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
+              <el-button type="text" size="small" @click="editRole(row.id)">角色</el-button>
               <el-button
+                :disabled="!checkPermission('point-user-delete')"
                 type="text"
                 size="small"
                 @click="delEmployee(row.id)"
@@ -79,6 +81,7 @@
     </div>
     <!-- 放置弹层组件 -->
     <add-employee :show-dialog.sync="showDialog" />
+    <assign-role ref="assignRole" :show-role-dialog.sync="showRoleDialog" :user-id="userId" />
   </div>
 </template>
 
@@ -87,9 +90,11 @@ import { getEmployeeList, delEmployee } from '@/api/employees'
 import EmployeeEnum from '@/api/constant/employees'
 import AddEmployee from './components/add-employee.vue'
 import { formatDate } from '@/filters'
+import AssignRole from './components/assign-role.vue'
 export default {
   components: {
-    AddEmployee
+    AddEmployee,
+    AssignRole
   },
   data() {
     return {
@@ -100,7 +105,9 @@ export default {
         total: 0
       },
       loading: false,
-      showDialog: false
+      showDialog: false,
+      showRoleDialog: false, // 控制角色分配弹层的显示
+      userId: null
     }
   },
   created() {
@@ -178,6 +185,11 @@ export default {
           return item[headers[key]]
         })
       })
+    },
+    async editRole(id) {
+      this.userId = id
+      await this.$refs.assignRole.getUserInfoById(id) // async 修饰的是 异步方法 先等待获取完所拥有的的角色Id 再显示弹层
+      this.showRoleDialog = true
     }
   }
 }

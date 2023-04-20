@@ -1,5 +1,6 @@
 import { getToken, setToken, removeToken, setTimeStamp } from '@/utils/auth'
 import { login, getUserInfo, getUserInfoById } from '@/api/user'
+import { resetRouter } from '@/router/index'
 const state = {
   token: getToken(),
   userInfo: {}
@@ -42,6 +43,13 @@ const actions = {
 
     // 删除用户资料
     context.commit('removeUserInfo')
+
+    // 重置路由 为初始状态 即静态路由
+    resetRouter()
+
+    // 将vuex permission模块下的routes设置为初始状态 只有静态路由 => 显示左侧菜单用的
+    // 子模块调用子模块的mutations 可以 将 commit的第三个参数 设置成  { root: true } 就表示当前的context不是子模块了 而是父模块
+    context.commit('permission/setRoutes', [], { root: true })
   }
 }
 export default {
