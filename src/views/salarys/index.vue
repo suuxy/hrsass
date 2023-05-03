@@ -67,7 +67,7 @@
           </el-table-column>
           <el-table-column label="津贴方案" width="100">通用方案</el-table-column>
           <el-table-column label="操作" width="260">
-            <template slot-scope="scope" style>
+            <template slot-scope="scope">
               <el-button
                 v-if="scope.row.currentBasicSalary + scope.row.currentPostWage > 0 "
                 size="mini"

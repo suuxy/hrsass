@@ -60,7 +60,7 @@ export const constantRoutes = [
     redirect: '/dashboard',
     children: [{
       path: 'dashboard',
-      name: 'Dashboard',
+      name: 'dashboard',
       component: () => import('@/views/dashboard/index'),
       meta: { title: '首页', icon: 'dashboard' } // title左侧菜单名
     }]
@@ -94,7 +94,8 @@ export const asyncRoutes = [
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  mode: 'history',
+  base: 'hr/', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: [...constantRoutes]
 })
