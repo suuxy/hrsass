@@ -16,6 +16,7 @@ import Component from './components'
 import '@/icons' // icon
 import '@/permission' // permission control
 import * as directives from '@/directives'
+// 导入检查用户是否拥有按钮操作权限的方法
 import checkPermission from '@/mixin/checkPermission'
 
 /**
@@ -43,7 +44,7 @@ Object.keys(directives).forEach(key => {
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
-// 全局混入对象 => 检查权限的方法
+// 全局混入对象 => 检查用户是否拥有按钮操作权限的方法
 Vue.mixin(checkPermission) // 表示所有的组件都拥有了检查操作权限的方法
 
 Vue.config.productionTip = false

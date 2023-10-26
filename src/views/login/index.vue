@@ -61,7 +61,7 @@
 
       <div class="tips">
         <span style="margin-right:20px;">账号: 13800000002</span>
-        <span> 密码: 123456</span>
+        <span> 密码: hm#qd@23!</span>
       </div>
     </el-form>
   </div>

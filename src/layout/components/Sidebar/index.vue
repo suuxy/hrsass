@@ -31,7 +31,8 @@ export default {
       'sidebar',
       'routes'
     ]),
-    // addRoutes 动态添加路由 这个地方不会响应式变化
+    // addRoutes 动态添加有权限的动态路由 这个地方不会响应式变化
+    // 所以就通过 vuex中的routes 进行菜单显示
     // routes() {
     //   return this.$router.options.routes
     // },

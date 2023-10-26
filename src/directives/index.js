@@ -13,7 +13,7 @@ export const imagerror = {
   componentUpdated(dom, options) {
     // 会在当前指令作用的组件 更新数据完毕之后 执行
     // inserted只会执行一次
-    // 组件初始化 一旦更新就不会再进入inserted函数 只会进入componentUpdated
+    // 组件初始化之后 一旦更新就不会再进入inserted函数 只会进入componentUpdated
     dom.src = dom.src || options.value
   }
 

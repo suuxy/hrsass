@@ -211,6 +211,7 @@ export default {
       this.$refs.deptForm.resetFields()
     },
     async getDepartDetails(id) {
+      // 这里不能用 this.treeNode.id 因为props传值是异步的 当父组件调用子组件这个方法的时候 可能props传值还没传过来 this.treeNode.id可能为空
       this.formData = await getDepartDetails(id)
     }
   }

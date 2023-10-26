@@ -5,6 +5,8 @@ import { getTimeStamp } from './auth'
 import router from '@/router'
 const TimeOut = 3600 // 定义超时时间
 const service = axios.create({
+  // 当执行npm run dev时 访问的是.env.development =>/api =>当请求的地址有/api时 会触发跨域代理机制 =>vue.config.js
+  // 本地前端 发送请求 到 本地服务后端 再由本地服务后端 代理请求到 另一个服务器后端
   baseURL: process.env.VUE_APP_BASE_API, // npm run dev 开发环境 => /api num run build 生产环境 => /prod-api
   timeout: 5000
 })
